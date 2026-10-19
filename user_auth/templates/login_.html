@@ -1,0 +1,186 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block css %}
+
+<style>
+    .login-container {
+        max-width: 450px;
+        margin: 55px auto;
+        padding: 20px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .login-header h1 {
+        color: #163b65;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .login-header p {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .login-card {
+        background: #fff;
+        padding: 35px;
+        border: 1px solid #e0e6ed;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    .login-form-group {
+        margin-bottom: 22px;
+    }
+
+    .login-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #26384a;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .login-form-group input {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        border: 1px solid #ccd5df;
+        border-radius: 7px;
+        background: #fff;
+        color: #333;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .login-form-group input:focus {
+        border-color: #1769aa;
+        box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+    }
+
+    .login-btn {
+        display: block;
+        width: 100%;
+        padding: 13px;
+        margin-top: 5px;
+        background: #1769aa;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .login-btn:hover {
+        background: #104c80;
+    }
+
+    .forgot-password {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .forgot-password a {
+        color: #1769aa;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .forgot-password a:hover {
+        text-decoration: underline;
+    }
+
+    .login-footer {
+        margin-top: 22px;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .login-footer a {
+        color: #1769aa;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .login-container {
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .login-header h1 {
+            font-size: 28px;
+        }
+
+        .login-card {
+            padding: 25px 20px;
+        }
+    }
+</style>{% endblock %}
+
+{% block content %}
+
+<div class="login-container"><div class="login-header">
+    <h1>Welcome Back</h1>
+    <p>Log in to continue your job search.</p>
+</div>
+
+<div class="login-card">
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <div class="login-form-group">
+            <label for="uname">Username</label>
+            <input
+                type="text"
+                id="uname"
+                name="uname"
+                placeholder="Enter your username"
+                required
+            >
+        </div>
+
+        <div class="login-form-group">
+            <label for="pasw">Password</label>
+            <input
+                type="password"
+                id="pasw"
+                name="pasw"
+                placeholder="Enter your password"
+                required
+            >
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="forgot-password">
+        <a href="{% url 'forget_pasw' %}">Forgot Password?</a>
+    </div>
+
+    <div class="login-footer">
+        Don't have an account?
+        <a href="{% url 'register' %}">Register here</a>
+    </div>
+
+</div>
+
+</div>
+{% endblock %}

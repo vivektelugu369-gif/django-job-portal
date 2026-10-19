@@ -1,0 +1,202 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+        .applications-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .applications-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .applications-header h1 {
+            color: #163b65;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .applications-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .applications-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 25px;
+        }
+
+        .application-card {
+            background: #fff;
+            border: 1px solid #e0e6ed;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .application-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .application-card h2 {
+            color: #163b65;
+            font-size: 23px;
+            margin: 0 0 20px;
+        }
+
+        .application-info p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .application-info strong {
+            color: #333;
+        }
+
+        .application-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 20px 0;
+            color: #333;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .status-badge.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-badge.accepted {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .view-job-btn,
+        .browse-jobs-btn {
+            display: inline-block;
+            background: #1769aa;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .view-job-btn:hover,
+        .browse-jobs-btn:hover {
+            background: #104c80;
+            color: white;
+        }
+
+        .no-applications {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: #fff;
+            border: 1px solid #e0e6ed;
+            border-radius: 12px;
+            padding: 45px 20px;
+        }
+
+        .no-applications h2 {
+            color: #163b65;
+            margin-bottom: 12px;
+        }
+
+        .no-applications p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 700px) {
+        .applications-container {
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .applications-header h1 {
+            font-size: 27px;
+        }
+
+        .applications-list {
+            grid-template-columns: 1fr;
+        }
+
+        .application-card {
+            padding: 20px;
+        }
+
+        }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="applications-container"><div class="applications-header">
+    <h1>My Applications</h1>
+    <p>Track the status of the jobs you have applied for.</p>
+</div>
+
+<div class="applications-list">
+    {% for application in applications %}
+
+        <div class="application-card">
+
+            <h2>{{ application.job.title }}</h2>
+
+            <div class="application-info">
+                <p><strong>Company:</strong> {{ application.job.company }}</p>
+                <p><strong>Location:</strong> {{ application.job.location }}</p>
+                <p><strong>Job Type:</strong> {{ application.job.job_type }}</p>
+                <p><strong>Applied On:</strong> {{ application.applied_at|date:"d M Y" }}</p>
+            </div>
+
+            <div class="application-status">
+                <strong>Status:</strong>
+                <span class="status-badge {{ application.status|lower }}">
+                    {{ application.status }}
+                </span>
+            </div>
+
+            <a class="view-job-btn" href="{% url 'job_details' application.job.id %}">
+                View Job Details
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <div class="no-applications">
+            <h2>No Applications Yet</h2>
+            <p>You haven't applied for any jobs yet.</p>
+            <a class="browse-jobs-btn" href="{% url 'jobs' %}">Browse Jobs</a>
+        </div>
+
+    {% endfor %}
+</div>
+
+</div>
+{% endblock %}

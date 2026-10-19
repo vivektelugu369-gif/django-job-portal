@@ -1,0 +1,189 @@
+{% extends 'main.html' %}
+
+{% block css %}
+
+<style>
+    .forgot-container {
+        max-width: 460px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .forgot-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .forgot-header h1 {
+        font-size: 30px;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .forgot-header p {
+        color: #666;
+        font-size: 15px;
+    }
+
+    .forgot-card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .forgot-form-group {
+        margin-bottom: 20px;
+    }
+
+    .forgot-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .forgot-form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .forgot-form-group input:focus {
+        border-color: #2563eb;
+    }
+
+    .forgot-form-group input:disabled {
+        background: #f1f1f1;
+        color: #666;
+        cursor: not-allowed;
+    }
+
+    .forgot-btn {
+        width: 100%;
+        padding: 12px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .forgot-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .forgot-messages {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+    }
+
+    .forgot-messages li {
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        background: #fef3c7;
+        color: #92400e;
+        font-size: 14px;
+    }
+
+    .forgot-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .forgot-footer a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .forgot-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+        .forgot-container {
+            margin: 25px auto;
+            padding: 12px;
+        }
+
+        .forgot-card {
+            padding: 22px;
+        }
+    }
+</style>{% endblock %}
+
+{% block content %}
+
+<div class="forgot-container"><div class="forgot-header">
+    <h1>Forget Password</h1>
+    <p>
+        {% if new %}
+            Create a new password for your account.
+        {% else %}
+            Enter your username to reset your password.
+        {% endif %}
+    </p>
+</div>
+
+<div class="forgot-card">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {% if new %}
+            <div class="forgot-form-group">
+                <label>User Name</label>
+                <input type="text" value="{{ old.username }}" disabled>
+            </div>
+
+            <div class="forgot-form-group">
+                <label>New Password</label>
+                <input type="password" name="npasw"
+                       placeholder="Enter new password" required>
+            </div>
+
+            <div class="forgot-form-group">
+                <label>Confirm Password</label>
+                <input type="password" name="conf_pasw"
+                       placeholder="Confirm new password" required>
+            </div>
+        {% else %}
+            <div class="forgot-form-group">
+                <label>Enter User Name</label>
+                <input type="text" name="uname"
+                       placeholder="Enter your username" required>
+            </div>
+        {% endif %}
+
+        <button type="submit" class="forgot-btn">Submit</button>
+    </form>
+
+    {% if messages %}
+        <ul class="forgot-messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="forgot-footer">
+        <a href="{% url 'login_' %}">Back to Login</a>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+
+
+
+

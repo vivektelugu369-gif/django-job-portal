@@ -1,0 +1,195 @@
+{% extends 'main.html' %}
+
+{% block css %}
+    <style>
+                /* Main container */
+        .jobs-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        /* Page heading */
+        .jobs-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .jobs-header h1 {
+            color: #173667;
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .jobs-header p {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        /* Jobs layout */
+        .jobs-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        /* Individual job card */
+        .job-card {
+            background-color: #ffffff;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .job-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(23, 54, 103, 0.12);
+        }
+
+        /* Job title */
+        .job-card h2 {
+            color: #173667;
+            font-size: 23px;
+            margin: 0 0 20px;
+            overflow-wrap: anywhere;
+        }
+
+        /* Job information */
+        .job-card p {
+            color: #475569;
+            font-size: 15px;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .job-card strong {
+            color: #263b59;
+        }
+
+        /* Action buttons */
+        .job-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 22px;
+        }
+
+        .job-actions a {
+            display: inline-block;
+            padding: 10px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.2s ease;
+        }
+
+        /* View details */
+        .details-btn {
+            background-color: #173667;
+            color: white;
+        }
+
+        .details-btn:hover {
+            background-color: #2563eb;
+        }
+
+        /* Edit button */
+        .edit-btn {
+            background-color: #e0f2fe;
+            color: #075985;
+        }
+
+        .edit-btn:hover {
+            background-color: #bae6fd;
+        }
+
+        /* Delete button */
+        .delete-btn {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .delete-btn:hover {
+            background-color: #fecaca;
+        }
+
+        /* Empty state */
+        .no-jobs {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+        }
+
+        .no-jobs h2 {
+            color: #173667;
+        }
+
+        .no-jobs p {
+            color: #64748b;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .jobs-list {
+                grid-template-columns: 1fr;
+            }
+
+            .jobs-header h1 {
+                font-size: 29px;
+            }
+
+            .jobs-container {
+                margin: 20px auto;
+                padding: 15px;
+            }
+        }
+
+    </style>
+{% endblock %}
+
+{% block content %}
+<center>
+    <div class="jobs-container">
+        <div class="jobs-header">
+            <h1>Find Your Dream job</h1>
+            <p>Explore opportunities and take the next step in your career</p>
+        </div>
+    
+        <div class="jobs-list">
+            {% for job in data %}
+                <div class="job-card">
+                    <hr>
+                    <h2>{{job.title}}</h2>
+                    <p><strong>Company:</strong>{{job.company}}</p>
+                    <p><strong>Location:</strong>{{job.location}}</p>
+                    <p><strong>Job Type:</strong>{{job.job_type}}</p>
+                    <p><strong>Posted on:</strong>{{job.created_at|date:'d M Y'}}</p>
+                    <div class="job-actions">
+                        <a href="{% url 'job_details' job.id %}">View Details</a>
+                        <hr>
+                        {% if user == job.posted_by %}
+                            <a href="{% url 'edit_job' job.id %}">Edit Job</a>
+                        {% endif %}
+
+                        {% if user == job.posted_by %}
+                            <a href="{% url 'delete_job' job.id %}">Delete Job</a>
+                        {% endif %}
+                    </div>
+                </div>
+         
+                {% empty %}
+                <div class="no-jobs">
+                    <h2>No Jobs Available</h2>
+                    <p>Please check back later for new opportunities.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</center>
+{% endblock %}

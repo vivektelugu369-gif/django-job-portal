@@ -1,0 +1,346 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block css %}
+
+<style>
+    .home-container {
+        width: 100%;
+        padding: 45px 20px;
+        box-sizing: border-box;
+    }
+
+    .hero-section {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 60px 30px;
+        text-align: center;
+        background: linear-gradient(135deg, #eaf2ff, #f5f8ff);
+        border-radius: 20px;
+        box-sizing: border-box;
+    }
+
+    .hero-section h1 {
+        color: #173667;
+        font-size: 42px;
+        line-height: 1.3;
+        margin: 0 0 20px;
+    }
+
+    .hero-section p {
+        color: #555f70;
+        font-size: 17px;
+        line-height: 1.8;
+        max-width: 650px;
+        margin: 0 auto 30px;
+    }
+
+    .search-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(23, 54, 103, 0.10);
+    }
+
+    .search-container form {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .search-container input,
+    .search-container select {
+        flex: 1;
+        min-width: 0;
+        padding: 14px 12px;
+        border: 1px solid #d5dce8;
+        border-radius: 7px;
+        font-size: 14px;
+        background: white;
+        box-sizing: border-box;
+    }
+
+    .search-container input:focus,
+    .search-container select:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.10);
+    }
+
+    .search-container button {
+        padding: 14px 24px;
+        background: #173667;
+        color: white;
+        border: none;
+        border-radius: 7px;
+        font-size: 15px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .search-container button:hover {
+        background: #2563eb;
+    }
+
+    /* Recent jobs section */
+    .recent-jobs-section {
+        max-width: 1100px;
+        margin: 45px auto;
+        padding: 0 20px;
+    }
+
+    .recent-jobs-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .recent-jobs-header h2 {
+        color: #173667;
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .recent-jobs-header p {
+        color: #667085;
+        font-size: 16px;
+    }
+
+    .recent-jobs-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 22px;
+    }
+
+    .recent-job-card {
+        padding: 24px;
+        background: white;
+        border: 1px solid #e0e6ed;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .recent-job-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.09);
+    }
+
+    .recent-job-card h3 {
+        color: #173667;
+        font-size: 21px;
+        margin: 0 0 15px;
+    }
+
+    .recent-job-card p {
+        color: #555f70;
+        font-size: 15px;
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    .job-type-badge {
+        display: inline-block;
+        margin-top: 8px;
+        padding: 6px 12px;
+        background: #eaf2ff;
+        color: #2457a6;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .job-details-link {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 11px 17px;
+        background: #173667;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .job-details-link:hover {
+        background: #2563eb;
+    }
+
+    .view-all-jobs {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .view-all-jobs a {
+        display: inline-block;
+        padding: 13px 24px;
+        border: 1px solid #173667;
+        border-radius: 7px;
+        color: #173667;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .view-all-jobs a:hover {
+        background: #173667;
+        color: white;
+    }
+
+    .no-recent-jobs {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 30px;
+        background: #f7f9fc;
+        border-radius: 10px;
+        color: #555f70;
+    }
+
+    @media (max-width: 768px) {
+        .home-container {
+            padding: 25px 12px;
+        }
+
+        .hero-section {
+            padding: 40px 18px;
+        }
+
+        .hero-section h1 {
+            font-size: 30px;
+        }
+
+        .hero-section p {
+            font-size: 15px;
+        }
+
+        .search-container form {
+            flex-direction: column;
+        }
+
+        .search-container input,
+        .search-container select,
+        .search-container button {
+            width: 100%;
+        }
+
+        .recent-jobs-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .recent-jobs-header h2 {
+            font-size: 26px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-section {
+            padding: 30px 14px;
+        }
+
+        .hero-section h1 {
+            font-size: 25px;
+        }
+
+        .search-container {
+            padding: 14px;
+        }
+
+        .recent-jobs-section {
+            padding: 0 12px;
+        }
+
+        .recent-job-card {
+            padding: 20px;
+        }
+    }
+</style>{% endblock %}
+
+{% block content %}
+
+<!-- Hero section --><div class="home-container">
+    <div class="hero-section">    <h1>Find Your Dream Job. Build Your Future.</h1>
+
+    <p>
+        Explore job opportunities from companies and take
+        the next step in your career.
+    </p>
+
+    <div class="search-container">
+        <form action="{% url 'jobs' %}" method="GET">
+
+            <input
+                type="text"
+                name="q"
+                placeholder="Job title, skills or company"
+            >
+
+            <input
+                type="text"
+                name="location"
+                placeholder="Location"
+            >
+
+            <select name="job_type">
+                <option value="">All Job Types</option>
+                <option value="Full-time">Full-time</option>
+                <option value="Part-time">Part-time</option>
+                <option value="Internship">Internship</option>
+                <option value="Contract">Contract</option>
+            </select>
+
+            <button type="submit">Search Jobs</button>
+
+        </form>
+    </div>
+
+</div>
+
+</div><!-- Recent jobs section --><section class="recent-jobs-section"><div class="recent-jobs-header">
+    <h2>Recently Posted Jobs</h2>
+    <p>Explore the latest opportunities available on our platform.</p>
+</div>
+
+<div class="recent-jobs-grid">
+
+    {% for job in recent_jobs %}
+
+        <div class="recent-job-card">
+
+            <h3>{{ job.title }}</h3>
+
+            <p><strong>Company:</strong> {{ job.company }}</p>
+
+            <p><strong>Location:</strong> {{ job.location }}</p>
+
+            <span class="job-type-badge">{{ job.job_type }}</span>
+
+            <p>
+                <strong>Posted:</strong>
+                {{ job.created_at|date:"d M Y" }}
+            </p>
+
+            <a
+                href="{% url 'job_details' job.id %}"
+                class="job-details-link"
+            >
+                View Details
+            </a>
+
+        </div>
+
+    {% empty %}
+
+        <div class="no-recent-jobs">
+            <h3>No Jobs Available Yet</h3>
+            <p>New job opportunities will appear here when they are posted.</p>
+        </div>
+
+    {% endfor %}
+
+</div>
+
+<div class="view-all-jobs">
+    <a href="{% url 'jobs' %}">View All Jobs</a>
+</div>
+
+</section>{% endblock %}

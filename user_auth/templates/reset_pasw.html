@@ -1,0 +1,194 @@
+{% extends 'main.html' %}
+
+{% block css %}
+
+<style>
+    .reset-container {
+        max-width: 460px;
+        margin: 50px auto;
+        padding: 20px;
+    }
+
+    .reset-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .reset-header h1 {
+        font-size: 30px;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .reset-header p {
+        color: #666;
+        font-size: 15px;
+    }
+
+    .reset-card {
+        background: #fff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .reset-form-group {
+        margin-bottom: 20px;
+    }
+
+    .reset-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .reset-form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 15px;
+        box-sizing: border-box;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    .reset-form-group input:focus {
+        border-color: #2563eb;
+    }
+
+    .reset-form-group input:disabled {
+        background: #f1f1f1;
+        color: #666;
+        cursor: not-allowed;
+    }
+
+    .reset-btn {
+        width: 100%;
+        padding: 12px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .reset-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .reset-messages {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+    }
+
+    .reset-messages li {
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        background: #fef3c7;
+        color: #92400e;
+        font-size: 14px;
+    }
+
+    .reset-footer {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .reset-footer a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .reset-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+        .reset-container {
+            margin: 25px auto;
+            padding: 12px;
+        }
+
+        .reset-card {
+            padding: 22px;
+        }
+    }
+</style>{% endblock %}
+
+{% block content %}
+
+<div class="reset-container"><div class="reset-header">
+    <h1>Reset Password</h1>
+    <p>
+        {% if new %}
+            Create a new password for your account.
+        {% else %}
+            Verify your current password to continue.
+        {% endif %}
+    </p>
+</div>
+
+<div class="reset-card">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <div class="reset-form-group">
+            <label>User Name</label>
+            <input type="text"
+                   value="{{ request.user.username }}"
+                   disabled>
+        </div>
+
+        {% if new %}
+            <div class="reset-form-group">
+                <label>Enter New Password</label>
+                <input type="password"
+                       name="npsw"
+                       placeholder="Enter new password"
+                       required>
+            </div>
+
+            <div class="reset-form-group">
+                <label>Confirm New Password</label>
+                <input type="password"
+                       name="conf_pasw"
+                       placeholder="Confirm new password"
+                       required>
+            </div>
+        {% else %}
+            <div class="reset-form-group">
+                <label>Old Password</label>
+                <input type="password"
+                       name="opsw"
+                       placeholder="Enter your current password"
+                       required>
+            </div>
+        {% endif %}
+
+        <button type="submit" class="reset-btn">Submit</button>
+    </form>
+
+    {% if messages %}
+        <ul class="reset-messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <div class="reset-footer">
+        <a href="{% url 'profile' %}">Back to Profile</a>
+    </div>
+</div>
+
+</div>
+{% endblock %}
+

@@ -1,0 +1,30 @@
+/* General page styling */
+* {
+  box-sizing: border-box;
+  }
+/* Navigation */
+
+nav{
+    background-color: #173b67;
+    padding: 18px 25px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: space-evenly;
+    .logo{
+        color: white;
+        font-weight: bold;
+    }
+    .links {
+        display: flex;
+        justify-content: space-evenly;
+        gap: 3rem;
+        a{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        
+        }
+    }
+}
+

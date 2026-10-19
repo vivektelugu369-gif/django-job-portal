@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'base/style.css' %}">
+    {% block css %}
+    {% endblock %}
+</head>
+<body>
+    {% include 'nav.html' %}
+    <center>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    </center>
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

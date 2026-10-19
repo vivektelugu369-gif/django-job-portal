@@ -1,0 +1,270 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    /* Main container */
+.applicants-container {
+    max-width: 950px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Page header */
+.applicants-header {
+    text-align: center;
+    margin-bottom: 35px;
+    padding: 25px;
+    background: #eaf2ff;
+    border-radius: 12px;
+}
+
+.applicants-header h1 {
+    color: #173667;
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.applicants-header h2 {
+    color: #2563eb;
+    font-size: 24px;
+    overflow-wrap: anywhere;
+}
+
+.applicants-header p {
+    color: #475569;
+}
+
+/* Applicant list */
+.applicants-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+/* Individual applicant card */
+.applicant-card {
+    padding: 25px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+}
+
+.applicant-card:hover {
+    box-shadow: 0 8px 18px rgba(23, 54, 103, 0.10);
+}
+
+.applicant-card h3 {
+    color: #173667;
+    font-size: 21px;
+    margin-top: 0;
+    overflow-wrap: anywhere;
+}
+
+.applicant-card p {
+    color: #475569;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+/* Status labels */
+.status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status.pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status.accepted {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status.rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Status form */
+.status-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.status-form label {
+    color: #263b59;
+    font-weight: bold;
+}
+
+.status-form select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 14px;
+}
+
+.status-form button {
+    padding: 11px 16px;
+    color: #ffffff;
+    background: #173667;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.status-form button:hover {
+    background: #2563eb;
+}
+
+/* Empty state */
+.no-applicants {
+    grid-column: 1 / -1;
+    padding: 40px 20px;
+    text-align: center;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+}
+
+.no-applicants h3 {
+    color: #173667;
+}
+
+.no-applicants p {
+    color: #64748b;
+}
+
+/* Back link */
+.back-link {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.back-link a {
+    display: inline-block;
+    padding: 12px 20px;
+    color: #ffffff;
+    background: #173667;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link a:hover {
+    background: #2563eb;
+}
+
+/* Responsive layout */
+@media (max-width: 700px) {
+    .applicants-container {
+        margin: 20px auto;
+        padding: 12px;
+    }
+
+    .applicants-list {
+        grid-template-columns: 1fr;
+    }
+
+    .applicants-header h1 {
+        font-size: 27px;
+    }
+
+    .applicant-card {
+        padding: 20px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="applicants-container">
+
+    <div class="applicants-header">
+        <h1>Job Applicants</h1>
+        <h2>{{ job.title }}</h2>
+        <p><strong>Company:</strong> {{ job.company }}</p>
+    </div>
+
+    <div class="applicants-list">
+        {% for application in applications %}
+
+        <div class="applicant-card">
+
+            <h3>{{ application.application.username }}</h3>
+
+            <p>
+                <strong>Applied On:</strong>
+                {{ application.applied_at|date:'d M Y, h:i A' }}
+            </p>
+
+            <p>
+                <strong>Current Status:</strong>
+                <span class="status {{ application.status|lower }}">
+                    {{ application.status }}
+                </span>
+            </p>
+
+            <form
+                action="{% url 'update_application_status' application.id %}"
+                method="POST"
+                class="status-form">
+
+                {% csrf_token %}
+
+                <label for="status-{{ application.id }}">
+                    Update Status:
+                </label>
+
+                <select name="status" id="status-{{ application.id }}">
+                    <option value="Pending"
+                        {% if application.status == 'Pending' %}selected{% endif %}>
+                        Pending
+                    </option>
+
+                    <option value="Accepted"
+                        {% if application.status == 'Accepted' %}selected{% endif %}>
+                        Accepted
+                    </option>
+
+                    <option value="Rejected"
+                        {% if application.status == 'Rejected' %}selected{% endif %}>
+                        Rejected
+                    </option>
+                </select>
+
+                <button type="submit">Update Status</button>
+            </form>
+
+        </div>
+
+        {% empty %}
+
+        <div class="no-applicants">
+            <h3>No Applicants Yet</h3>
+            <p>No applicants have applied for this job yet.</p>
+        </div>
+
+        {% endfor %}
+    </div>
+
+    <div class="back-link">
+        <a href="{% url 'jobs' %}">Back to Jobs</a>
+    </div>
+
+</div>
+{% endblock %}
+

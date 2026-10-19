@@ -1,0 +1,284 @@
+{% extends 'main.html' %}
+
+{% block css %}
+
+<style>
+    .about-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .about-hero {
+        background: #2563eb;
+        color: white;
+        text-align: center;
+        padding: 55px 25px;
+        border-radius: 14px;
+        margin-bottom: 35px;
+    }
+
+    .about-hero h1 {
+        font-size: 36px;
+        margin: 0 0 15px;
+    }
+
+    .about-hero p {
+        font-size: 17px;
+        line-height: 1.7;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .about-section {
+        background: white;
+        padding: 30px;
+        margin-bottom: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    }
+
+    .about-section h2 {
+        color: #1e3a8a;
+        font-size: 25px;
+        margin-top: 0;
+        margin-bottom: 15px;
+    }
+
+    .about-section p {
+        color: #555;
+        font-size: 16px;
+        line-height: 1.8;
+        margin-bottom: 0;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 22px;
+    }
+
+    .feature-card {
+        padding: 22px 18px;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .feature-card h3 {
+        color: #1e40af;
+        font-size: 17px;
+        margin: 0 0 10px;
+    }
+
+    .feature-card p {
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .technology-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .technology-badge {
+        background: #dbeafe;
+        color: #1e40af;
+        padding: 10px 17px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .about-cta {
+        text-align: center;
+        padding: 35px 20px;
+        background: #eff6ff;
+        border-radius: 12px;
+        margin-top: 30px;
+    }
+
+    .about-cta h2 {
+        color: #1e3a8a;
+        margin-top: 0;
+    }
+
+    .about-cta p {
+        color: #555;
+        line-height: 1.7;
+        margin-bottom: 22px;
+    }
+
+    .about-btn {
+        display: inline-block;
+        background: #2563eb;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.3s;
+    }
+
+    .about-btn:hover {
+        background: #1d4ed8;
+    }
+
+    @media (max-width: 700px) {
+        .about-container {
+            margin: 20px auto;
+            padding: 12px;
+        }
+
+        .about-hero {
+            padding: 40px 18px;
+        }
+
+        .about-hero h1 {
+            font-size: 29px;
+        }
+
+        .about-section {
+            padding: 22px;
+        }
+
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>{% endblock %}
+
+{% block content %}
+
+<div class="about-container"><!-- Hero Section -->
+<section class="about-hero">
+    <h1>About Our Job Portal</h1>
+    <p>
+        Your journey towards a better career starts here.
+        Explore job opportunities, connect with employers,
+        and take the next step in your professional journey.
+    </p>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+    <h2>Who We Are</h2>
+    <p>
+        Our Job Portal is a web-based platform designed to make
+        job searching and recruitment easier. Job seekers can
+        explore available opportunities and apply for suitable
+        positions, while employers can publish job openings and
+        manage applications through one convenient platform.
+    </p>
+</section>
+
+<!-- Mission Section -->
+<section class="about-section">
+    <h2>Our Mission</h2>
+    <p>
+        Our mission is to simplify the connection between job
+        seekers and employers by providing an accessible platform
+        for discovering opportunities, submitting applications,
+        and managing recruitment activities.
+    </p>
+</section>
+
+<!-- Features Section -->
+<section class="about-section">
+    <h2>What Our Platform Offers</h2>
+    <p>Explore the main features available on our Job Portal.</p>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <h3>Job Search</h3>
+            <p>
+                Browse available job openings and find opportunities
+                that match your interests and skills.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Job Applications</h3>
+            <p>
+                Apply for suitable positions and check the status
+                of your submitted applications.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Job Management</h3>
+            <p>
+                Employers can post job openings, edit listings,
+                and manage their recruitment activities.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Applicant Management</h3>
+            <p>
+                Employers can review applicants and update
+                application statuses.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>User Profiles</h3>
+            <p>
+                Manage your personal information and profile
+                picture in one place.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Account Security</h3>
+            <p>
+                Access account login, password reset, and
+                password update functionality.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Technology Section -->
+<section class="about-section">
+    <h2>Technologies Used</h2>
+    <p>
+        This project is developed using the following technologies
+        to create a functional web application.
+    </p>
+
+    <div class="technology-list">
+        <span class="technology-badge">Python</span>
+        <span class="technology-badge">Django</span>
+        <span class="technology-badge">SQL</span>
+        <span class="technology-badge">HTML5</span>
+        <span class="technology-badge">CSS3</span>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="about-cta">
+    <h2>Ready to Start Your Career Journy?</h2>
+    <p>
+        Sign in to explore available job opportunities, apply for positions that match your skills, track your application
+        and take the next step towards your career goals.
+    </p>
+
+    <a href="{% url 'login_' %}" class="about-btn">
+        Login
+    </a>
+</section>
+
+</div>
+{% endblock %}

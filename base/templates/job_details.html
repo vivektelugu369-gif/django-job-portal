@@ -1,0 +1,235 @@
+{% extends 'main.html' %}
+
+{% block css %}
+<style>
+    /* Main container */
+.job-details-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+/* Job details card */
+.job-details-card {
+    background: #ffffff;
+    padding: 35px;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    box-shadow: 0 6px 20px rgba(23, 54, 103, 0.08);
+}
+
+/* Page heading */
+.page-heading {
+    color: #64748b;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 25px;
+}
+
+/* Job title */
+.job-header h2 {
+    color: #173667;
+    font-size: 32px;
+    margin: 0 0 25px;
+    overflow-wrap: anywhere;
+}
+
+/* Job information */
+.job-information p {
+    color: #475569;
+    font-size: 16px;
+    line-height: 1.8;
+    margin: 14px 0;
+    overflow-wrap: anywhere;
+}
+
+.job-information strong {
+    color: #263b59;
+}
+
+/* Description and skills */
+.job-description,
+.job-skills {
+    margin-top: 25px;
+    padding: 18px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border-left: 4px solid #2563eb;
+}
+
+.job-description h3,
+.job-skills h3 {
+    color: #173667;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.job-description p,
+.job-skills p {
+    margin-bottom: 0;
+    white-space: pre-line;
+}
+
+/* Action section */
+.job-details-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Back button */
+.back-btn {
+    display: inline-block;
+    padding: 12px 18px;
+    color: #173667;
+    background: #eaf2ff;
+    border-radius: 7px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-btn:hover {
+    background: #dbeafe;
+}
+
+/* Apply button */
+.apply-btn {
+    padding: 12px 22px;
+    color: white;
+    background: #173667;
+    border: none;
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.apply-btn:hover {
+    background: #2563eb;
+}
+
+/* Remove default form spacing */
+.job-details-actions form {
+    margin: 0;
+}
+
+/* Login message */
+.login-message {
+    color: #64748b;
+    margin: 0;
+}
+
+.login-message a {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+/* Mobile layout */
+@media (max-width: 600px) {
+    .job-details-container {
+        margin: 20px auto;
+        padding: 12px;
+    }
+
+    .job-details-card {
+        padding: 22px 18px;
+    }
+
+    .job-header h2 {
+        font-size: 26px;
+    }
+
+    .job-details-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .job-details-actions form {
+        width: 100%;
+    }
+
+    .apply-btn,
+    .back-btn {
+        width: 100%;
+        box-sizing: border-box;
+        text-align: center;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="job-details-container">
+
+    <div class="job-details-card">
+
+        <h1 class="page-heading">Job Details</h1>
+
+        <div class="job-header">
+            <h2>{{ job.title }}</h2>
+        </div>
+
+        <div class="job-information">
+
+            <p><strong>Company:</strong> {{ job_data.company }}</p>
+
+            <p><strong>Location:</strong> {{ job_data.location }}</p>
+
+            <p><strong>Job Type:</strong> {{ job_data.job_type }}</p>
+
+            <p>
+                <strong>Salary:</strong>
+                {% if job_data.salary %}
+                    ₹{{ job_data.salary }} per year
+                {% else %}
+                    Salary not disclosed
+                {% endif %}
+            </p>
+
+            <div class="job-description">
+                <h3>Description</h3>
+                <p>{{ job_data.description }}</p>
+            </div>
+
+            <div class="job-skills">
+                <h3>Required Skills</h3>
+                <p>{{ job_data.required_skills }}</p>
+            </div>
+
+            <p>
+                <strong>Posted on:</strong>
+                {{ job_data.created_at|date:'d M Y' }}
+            </p>
+
+        </div>
+
+        <div class="job-details-actions">
+
+            <a class="back-btn" href="{% url 'jobs' %}">
+                Back to Jobs
+            </a>
+
+            {% if user.is_authenticated %}
+                <form method="POST" action="{% url 'apply_job' job_data.id %}">
+                    {% csrf_token %}
+                    <button class="apply-btn" type="submit">
+                        Apply for Job
+                    </button>
+                </form>
+            {% else %}
+                <p class="login-message">
+                    Please <a href="{% url 'login_' %}">Login</a>
+                    to apply for this job.
+                </p>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
+

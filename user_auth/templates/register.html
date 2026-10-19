@@ -1,0 +1,185 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block css %}
+
+<style>
+    .register-container {
+        max-width: 500px;
+        margin: 45px auto;
+        padding: 20px;
+    }
+
+    .register-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .register-header h1 {
+        color: #163b65;
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .register-header p {
+        color: #666;
+        font-size: 15px;
+        line-height: 1.6;
+    }
+
+    .register-card {
+        background: #fff;
+        padding: 32px;
+        border: 1px solid #e0e6ed;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    }
+
+    .register-error {
+        padding: 12px;
+        margin-bottom: 20px;
+        background: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+        border-radius: 7px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .register-form-group {
+        margin-bottom: 20px;
+    }
+
+    .register-form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #26384a;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .register-form-group input {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 12px 14px;
+        border: 1px solid #ccd5df;
+        border-radius: 7px;
+        background: #fff;
+        color: #333;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .register-form-group input:focus {
+        border-color: #1769aa;
+        box-shadow: 0 0 0 3px rgba(23, 105, 170, 0.12);
+    }
+
+    .register-btn {
+        width: 100%;
+        padding: 13px;
+        margin-top: 5px;
+        background: #1769aa;
+        color: #fff;
+        border: none;
+        border-radius: 7px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .register-btn:hover {
+        background: #104c80;
+    }
+
+    .register-footer {
+        margin-top: 22px;
+        text-align: center;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .register-footer a {
+        color: #1769aa;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .register-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+        .register-container {
+            margin: 25px auto;
+            padding: 15px;
+        }
+
+        .register-header h1 {
+            font-size: 28px;
+        }
+
+        .register-card {
+            padding: 24px 20px;
+        }
+    }
+</style>{% endblock %}
+
+{% block content %}
+
+<div class="register-container"><div class="register-header">
+    <h1>Create Your Account</h1>
+    <p>Register to explore job opportunities and manage your applications.</p>
+</div>
+
+<div class="register-card">
+
+    {% if error %}
+        <div class="register-error">
+            User already exists. Please choose another username.
+        </div>
+    {% endif %}
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        <div class="register-form-group">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" name="fname" placeholder="Enter your first name" required>
+        </div>
+
+        <div class="register-form-group">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" name="lname" placeholder="Enter your last name" required>
+        </div>
+
+        <div class="register-form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+        </div>
+
+        <div class="register-form-group">
+            <label for="uname">Username</label>
+            <input type="text" id="uname" name="uname" placeholder="Choose a username" required>
+        </div>
+
+        <div class="register-form-group">
+            <label for="pasw">Password</label>
+            <input type="password" id="pasw" name="pasw" placeholder="Create a password" required>
+        </div>
+
+        <button type="submit" class="register-btn">Create Account</button>
+    </form>
+
+    <div class="register-footer">
+        Already have an account?
+        <a href="{% url 'login_' %}">Login here</a>
+    </div>
+
+</div>
+
+</div>
+{% endblock %}
